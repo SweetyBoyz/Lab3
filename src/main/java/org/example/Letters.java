@@ -50,14 +50,12 @@ public class Letters {
             else if (Character.isLowerCase(c)) l.incLower();
             else if (Character.isWhitespace(c)) l.incSpace();
             else if (Character.isDigit(c)) l.incDigit();
-
-
         }
         l.incSum();
         return l;
     }
 
-    @Override
+
     public String toString() {
         return "UpperCase: " + upper + ", LowerCase: " + lower + ", Sum: " + sum + ", Spaces: " + space + ", Digit: " + digit;
     }

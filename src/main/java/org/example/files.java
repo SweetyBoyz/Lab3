@@ -11,47 +11,7 @@ public class files {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-/************* File creation and Deletion **************/
-        System.out.println(String.format("Creating an empty file [%s]....",emptyFileName));
-        File file = new File(emptyFileName);
-        try {
-            if (file.createNewFile()) {
-                System.out.println("File creation successful!");
 
-            } else {
-                System.out.println("File creation failed!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println(String.format("Deleting file [%s]....",emptyFileName));
-        System.out.println("Do you want to delete the file (Y or y for Yes)?");
-        Scanner in=new Scanner(System.in);
-        char choice=in.nextLine().charAt(0);
-        if(choice=='Y' || choice=='y')
-        {
-            try {
-                if (file.delete()) {
-                    System.out.println("File deletion successful!");
-                } else {
-                    System.out.println("File deletion failed!");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-/******************* Writing to a text file ********************/
-        System.out.println(String.format("Writing to file [%s]",textFileName));
-        try {
-            FileWriter myWriter = new FileWriter(textFileName);
-            String sentence = scanner.nextLine();
-            myWriter.write(sentence + '\n');
-            myWriter.close();
-            System.out.println("Text saved successfully.");
-        } catch (Exception e) {
-            System.out.println("Text saving failed.");
-            e.printStackTrace();
-        }
 /******************* Reading from a text file *************************/
 // using FileReader
         System.out.println(String.format("Reading file [%s] using FileReader",textFileName));
