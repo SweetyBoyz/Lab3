@@ -1,12 +1,16 @@
 package org.example;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class files {
     public final static String emptyFileName="file1.txt";
     public final static String textFileName="file2.txt";
+    public final static String textSave="Results.txt";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -16,8 +20,14 @@ public class files {
 // using FileReader
         System.out.println(String.format("Reading file [%s] using FileReader",textFileName));
                 StringBuilder sb= new StringBuilder();
+        List<String> myList = new ArrayList<String>();
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> index = new ArrayList<>();
+
         try {
             FileReader myReader = new FileReader(textFileName);
+
+
             try(Scanner sc = new Scanner(new FileInputStream(textFileName))) {
                 int count = 0;
                 while (sc.hasNext()) {
@@ -37,11 +47,50 @@ public class files {
 
             int character=myReader.read();
             while(character!=-1)
-            {   System.out.print((char) character);
+            {
                 sb.append((char) character);
                 character=myReader.read();
 
+
             }
+            list1.add(sb.toString());
+
+
+            Pattern pattern = Pattern.compile("[+-]?([0-9]*[.])?[0-9]+");
+            Matcher matcher = pattern.matcher(sb);
+
+            while (matcher.find()) {
+                myList.add(matcher.group());
+
+            }
+            String[] words_sp = sb.toString().split(" ");
+
+
+            String resultOfConvert;
+            for (int i = 0; i<words_sp.length;i++) {
+                if (myList.contains(words_sp[i])){
+
+                    int b = Integer.parseInt(words_sp[i]);
+                    resultOfConvert = Integer.toHexString(b);
+                    words_sp[i] = resultOfConvert;
+
+                }
+
+            }
+            String listString = String.join(", ", words_sp);
+            String words = listString.replaceAll("\\p{Punct}", "");
+            System.out.println("Your string: " + words);
+
+            try {
+                FileWriter myWriter = new FileWriter(textSave);
+                myWriter.write(words);
+                myWriter.close();
+
+            } catch (Exception e) {
+                System.out.println("Text saving failed.");
+                e.printStackTrace();
+            }
+
 
             myReader.close();
 
@@ -49,29 +98,6 @@ public class files {
             System.out.println("Text reading failed.");
             e.printStackTrace();
         }
-
-        System.out.println(sb.toString());
-// using Scanner
-        System.out.println(String.format("Reading file[%s] using Scanner",textFileName));
-        try {
-            File myFile = new File(textFileName);
-            Scanner myReader = new Scanner(myFile);
-
-
-            while (myReader.hasNextLine()) {
-
-                String line = myReader.nextLine();
-                System.out.println(line);
-            }
-            myReader.close();
-        } catch (Exception e) {
-            System.out.println("Text reading failed.");
-            e.printStackTrace();
-        }
-
-
-
-
 
 
     }

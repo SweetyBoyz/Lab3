@@ -1,5 +1,8 @@
 package org.example;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Letters {
     private int lower;
     private int upper;
